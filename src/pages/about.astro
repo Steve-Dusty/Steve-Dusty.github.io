@@ -1,39 +1,96 @@
 ---
 import Base from "../layouts/Base.astro";
+
+const socials = [
+  { label: "github", href: "https://github.com/Steve-Dusty" },
+  { label: "linkedin", href: "https://linkedin.com/in/steve-kuo2" },
+  { label: "twitter", href: "https://twitter.com/stevethedust" },
+  { label: "email", href: "mailto:steve.kuo@berkeley.edu" },
+];
 ---
 
-<Base title="About — Steve Kuo" description="Background, interests, and contact.">
-  <section class="py-8">
-    <h1 class="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+<Base
+  title="About — Steve Kuo"
+  description="Berkeley undergrad studying Data Science & Mathematics. Builder of agents, systems, and signals."
+>
+  <section class="py-12">
+    <p
+      class="font-mono text-[11px] uppercase tracking-[0.22em] text-neutral-500 dark:text-neutral-400"
+    >
+      Berkeley · Data Science & Mathematics
+    </p>
+    <h1
+      class="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100"
+    >
       About
     </h1>
   </section>
 
   <div class="prose dark:prose-invert">
     <p>
-      I'm Steve — a software engineer interested in systems programming,
-      machine learning, and quantitative finance.
+      I'm Steve — a Berkeley undergrad studying Data Science and Mathematics.
+      Most of my work sits at the intersection of agents, systems, and signals:
+      shipping autonomous agents that survive contact with the real world, the
+      infrastructure to run them, and the data pipelines that feed them.
     </p>
 
     <p>
-      Most of my work sits at the intersection of these areas: building
-      low-latency distributed systems, applying ML to financial data, and
-      more recently, exploring agentic AI architectures.
+      Currently a Research Scientist Intern at <strong>Virtue AI</strong>,
+      working on safety and evaluation for frontier LLM agents. Previously at{" "}
+      <strong>Workday</strong>, <strong>Fetch.ai</strong>,{" "}
+      <strong>Northrop Grumman</strong>, and an open source contributor at{" "}
+      <strong>Swarms.ai</strong>, where I authored the AgentRearrange technical
+      writeup.
     </p>
 
-    <h2>Interests</h2>
+    <p>
+      I'm also in the <strong>Founders Inc Canopy</strong> cohort, where I'm
+      building <strong>HVAC Smart Glasses</strong> — an AR system that turns a
+      field technician's view into a real-time diagnostic tool.
+    </p>
+
+    <h2>What I care about</h2>
     <ul>
-      <li>Distributed consensus and fault-tolerant systems</li>
-      <li>ML for time-series and signal processing</li>
-      <li>Rust, C++, and systems-level performance</li>
-      <li>LLM agents and tool-use architectures</li>
+      <li>Multi-agent orchestration, tool use, and agent reliability</li>
+      <li>Distributed systems and low-latency infrastructure</li>
+      <li>ML applied to financial and physical signals</li>
+      <li>Rust, Python, and the right tool for the right layer</li>
     </ul>
+
+    <h2>Off the keyboard</h2>
+    <p>
+      Classical violin for 15 years. Lacrosse and wrestling. 21× hackathon
+      winner — I like the constraint of "ship in 36 hours" more than I should.
+      The discipline that compounds quietly — daily reps, mostly invisible — is
+      the real foundation for everything visible.
+    </p>
 
     <h2>Contact</h2>
     <p>
-      The best way to reach me is via email or GitHub. I'm always happy to
-      chat about distributed systems, ML infrastructure, or interesting
-      side projects.
+      Best way to reach me is{" "}
+      <a href="mailto:steve.kuo@berkeley.edu">steve.kuo@berkeley.edu</a>. I'm
+      always happy to chat about agents, systems, or anything you're trying to
+      ship under pressure.
     </p>
+
+    <ul class="not-prose mt-6 flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs">
+      {
+        socials.map((s) => (
+          <li>
+            <a
+              href={s.href}
+              target={s.href.startsWith("mailto:") ? undefined : "_blank"}
+              rel={s.href.startsWith("mailto:") ? undefined : "noopener"}
+              class="group inline-flex items-baseline gap-0.5 text-neutral-500 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
+            >
+              <span class="text-neutral-300 transition-colors group-hover:text-neutral-900 dark:text-neutral-700 dark:group-hover:text-neutral-100">
+                /
+              </span>
+              {s.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
   </div>
 </Base>

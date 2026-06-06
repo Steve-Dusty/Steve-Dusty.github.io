@@ -1,8 +1,21 @@
 ---
+interface Props {
+  maxWidth?: "2xl" | "3xl" | "4xl" | "5xl";
+}
+
+const { maxWidth = "2xl" } = Astro.props;
+const widthMap = {
+  "2xl": "max-w-2xl",
+  "3xl": "max-w-3xl",
+  "4xl": "max-w-4xl",
+  "5xl": "max-w-5xl",
+};
+const widthClass = widthMap[maxWidth];
+
 const year = new Date().getFullYear();
 ---
 
-<footer class="mx-auto max-w-2xl px-6 py-12">
+<footer class={`mx-auto ${widthClass} px-6 py-12`}>
   <div class="border-t border-neutral-200 pt-6 dark:border-neutral-800">
     <p class="text-xs text-neutral-400 dark:text-neutral-500">
       &copy; {year} Steve Kuo

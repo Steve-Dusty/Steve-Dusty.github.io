@@ -1,132 +1,491 @@
 ---
 import Base from "../layouts/Base.astro";
-import { getCollection } from "astro:content";
 
-const projects = await getCollection("projects");
-const blog = await getCollection("blog", ({ data }) => !data.draft);
+// ----- News (most recent first) -----
+const news = [
+  {
+    date: "Jun 2026",
+    text: "Started as Research Scientist Intern at <a href='https://virtueai.com' target='_blank' rel='noopener'>Virtue AI</a>, working on evaluation for frontier LLM agents.",
+  },
+  {
+    date: "May 2026",
+    text: "Joined the <strong>Founders Inc Canopy</strong> cohort, building <a href='/projects/hvac-smart-glasses'>HVAC Smart Glasses</a>.",
+  },
+  {
+    date: "Apr 2026",
+    text: "AWS Builder Loft: 1st place overall + three sponsor tracks (Interconnected, TrinityOS, Mindra).",
+  },
+  {
+    date: "Mar 2026",
+    text: "AWS GenAI Hackathon: 1st place, Aerospike track. NVIDIA Spark: 1st, Nemotron track.",
+  },
+  {
+    date: "Feb 2026",
+    text: "Authored <em>AgentRearrange: A Technical Writeup</em> for <a href='https://swarms.ai' target='_blank' rel='noopener'>Swarms.ai</a>, on multi-agent task decomposition. <a href='/writeups/agent-rearrange.pdf' target='_blank' rel='noopener'>[pdf]</a>",
+  },
+];
 
-const featuredProjects = projects
-  .filter((p) => p.data.featured)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+// ----- Experience (reverse chronological) -----
+const experience = [
+  {
+    period: "Summer 2026",
+    role: "Research Scientist Intern",
+    company: "Virtue AI",
+    url: "https://virtueai.com",
+    blurb:
+      "Evaluation harnesses and red-team protocols for frontier LLM agents. I focus on the gap between benchmark numbers and the failures one actually sees in deployment.",
+  },
+  {
+    period: "Spring 2026",
+    role: "Software Engineer Intern",
+    company: "Workday",
+    url: "https://workday.com",
+    blurb:
+      "Built ML pipelines and internal automation tooling across platform services. AI engineering work on data ingestion, feature stores, and orchestrated retraining workflows.",
+  },
+  {
+    period: "Fall 2025",
+    role: "AI Engineer Intern",
+    company: "Fetch.ai",
+    url: "https://fetch.ai",
+    blurb:
+      "Autonomous agent infrastructure on the Fetch network. Agent-to-agent coordination and on-chain economic primitives.",
+  },
+  {
+    period: "2024 – present",
+    role: "Open Source Contributor",
+    company: "Swarms.ai",
+    url: "https://swarms.ai",
+    blurb:
+      "Contributing to the enterprise-grade multi-agent orchestration framework. <strong>6.8k+ GitHub stars</strong>, ~950 forks, production deployments at multiple enterprises. Authored the AgentRearrange technical writeup on multi-agent task decomposition.",
+  },
+  {
+    period: "Summer 2024",
+    role: "Software Engineer Intern",
+    company: "Northrop Grumman",
+    url: "https://northropgrumman.com",
+    blurb:
+      "Mission-critical <strong>C and C++</strong> for aerospace and defense systems. Real-time embedded work where every dependency goes through a security review.",
+  },
+];
 
-const recentBlog = blog
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 3);
+// ----- Projects (bibliography format) -----
+const projects = [
+  {
+    title: "HVAC Smart Glasses",
+    status: "in progress",
+    venue: "Founders Inc Canopy",
+    year: "2026",
+    blurb:
+      "AR overlay for HVAC technicians. Real-time equipment recognition, schematic recall, and guided repair flows. Offline-first. Hands stay on the tools.",
+    links: [
+      { label: "project", href: "/projects/hvac-smart-glasses" },
+      { label: "founders inc", href: "https://f.inc", external: true },
+    ],
+  },
+  {
+    title: "Agent Orchestrator",
+    status: "in progress",
+    venue: "Personal",
+    year: "2025–26",
+    blurb:
+      "Lightweight framework for composing LLM agents with tool use and shared memory. DAG task graphs, pluggable executors, traceable runs.",
+    links: [
+      { label: "project", href: "/projects/agent-orchestrator" },
+      { label: "github", href: "https://github.com/stevekuo/agent-orch", external: true },
+    ],
+  },
+  {
+    title: "Distributed Key-Value Store",
+    status: "",
+    venue: "Personal",
+    year: "2025",
+    blurb:
+      "Raft-based key-value store in Rust. Linearizable reads, log compaction, dynamic membership. ~50k writes/sec on a 3-node cluster. Property-based and deterministic simulation testing.",
+    links: [
+      { label: "project", href: "/projects/distributed-kv-store" },
+      { label: "github", href: "https://github.com/stevekuo/dkv", external: true },
+    ],
+  },
+  {
+    title: "ML Trading Signals",
+    status: "",
+    venue: "Personal",
+    year: "2025",
+    blurb:
+      "Gradient-boosted intraday equity signals from market microstructure features. Backtest harness with realistic transaction costs; live paper trading on AWS Lambda.",
+    links: [{ label: "project", href: "/projects/ml-trading-signals" }],
+  },
+];
+
+// ----- Writing (bibliography format) -----
+const writing = [
+  {
+    title: "AgentRearrange: A Technical Writeup",
+    venue: "Swarms.ai",
+    year: "2024",
+    blurb:
+      "Multi-agent task decomposition and reordering across agent graphs. Patterns from working on the orchestration framework.",
+    links: [
+      { label: "pdf", href: "/writeups/agent-rearrange.pdf", external: true },
+    ],
+  },
+  {
+    title: "Patterns for Reliable LLM Agents",
+    venue: "Personal blog",
+    year: "Dec 2025",
+    blurb:
+      "Practical patterns for agents that don't fall apart in production. Structured output, retries, retrieval, traces.",
+    links: [{ label: "post", href: "/blog/reliable-llm-agents" }],
+  },
+  {
+    title: "Why I Think About Markets",
+    venue: "Personal blog",
+    year: "Oct 2025",
+    blurb:
+      "Markets as the most honest real-time feedback system for testing ideas under uncertainty.",
+    links: [{ label: "post", href: "/blog/why-i-think-about-markets" }],
+  },
+];
+
+// ----- Hackathons (flat, event name emphasized) -----
+const hackathons = [
+  {
+    event: "AWS Builder Loft",
+    placement: "1st place overall + Interconnected, TrinityOS, Mindra tracks",
+  },
+  {
+    event: "AWS GenAI Hackathon",
+    placement: "1st place, Aerospike track",
+  },
+  {
+    event: "NVIDIA Spark Hackathon",
+    placement: "1st place, Nemotron track",
+  },
+  {
+    event: "Pokee AI · Dataclaw Hackathon",
+    placement: "1st place overall",
+  },
+  {
+    event: "NightHack 2",
+    placement: "1st place overall",
+  },
+  {
+    event: "SJSU Startup Pitch Jam",
+    placement: "1st place overall",
+  },
+  {
+    event: "SJSU Tractionathon",
+    placement: "1st place overall",
+  },
+  {
+    event: "Silicon Valley Innovation Challenge",
+    placement: "Winner",
+  },
+  {
+    event: "AWS Builder Loft (Round 2)",
+    placement: "2nd place, TestSprite, Minimax, Neo4j tracks",
+  },
+  {
+    event: "Swarms.ai Hackathon",
+    placement: "2nd place overall",
+  },
+  {
+    event: "CalHacks",
+    placement: "2nd place, Best Use of AgentVerse",
+  },
+  {
+    event: "YC Agent Jam",
+    placement: "2nd place, Best Use of Nivara",
+  },
+  {
+    event: "DigitalOcean × MLH Hackathon",
+    placement: "2nd place overall",
+  },
+  {
+    event: "ByteDance Hackathon",
+    placement: "2nd place",
+  },
+  {
+    event: "AWS Builder Loft",
+    placement: "3rd place, Apify track",
+  },
+  {
+    event: "Frontier Tower · Korean Investment Challenge",
+    placement: "3rd place",
+  },
+  {
+    event: "SCEHacks",
+    placement: "Cybersecurity track winner",
+  },
+  {
+    event: "StanfordXR",
+    placement: "Best Design & Storytelling",
+  },
+  {
+    event: "Minimax @ Entrepreneur First",
+    placement: "Multimodal Award",
+  },
+  {
+    event: "SFSU Hackathon",
+    placement: "Best Use of Vulture",
+  },
+  {
+    event: "Total Recall Agents Hackathon",
+    placement: "Best Use of Dify",
+  },
+];
 ---
 
-<Base title="Steve Kuo">
-  <section class="py-16">
-    <div class="flex items-start justify-between">
+<Base
+  title="Steve Kuo"
+  description="Steve Kuo. Berkeley undergrad, Data Science and Mathematics. Multi-agent systems, distributed infrastructure, and quantitative signals."
+  maxWidth="3xl"
+>
+  <article class="academic pb-20 pt-10">
+    <!-- ================== HEADER ================== -->
+    <header class="grid grid-cols-1 gap-x-8 gap-y-5 sm:grid-cols-[7.5rem_1fr]">
+      <!-- Portrait: /public/profile.jpg if present, else SK placeholder -->
+      <div
+        class="relative overflow-hidden rounded-sm bg-neutral-100 ring-1 ring-neutral-200 dark:bg-neutral-900 dark:ring-neutral-800"
+        style="width: 7.5rem; height: 7.5rem;"
+      >
+        <span
+          class="absolute inset-0 flex items-center justify-center font-sans text-3xl font-medium text-neutral-400 dark:text-neutral-600"
+          aria-hidden="true"
+        >
+          SK
+        </span>
+        <img
+          src="/profile.jpg"
+          alt="Steve Kuo"
+          class="relative h-full w-full object-cover"
+          onerror="this.remove()"
+        />
+      </div>
+
       <div>
-        <h1 class="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+        <h1 class="font-sans text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-50">
           Steve Kuo
         </h1>
-        <p class="mt-3 max-w-sm text-neutral-600 dark:text-neutral-400">
-          Building things at the intersection of systems, ML, and finance.
-          Currently exploring agentic AI and low-latency distributed systems.
+        <p class="mt-4 max-w-prose text-neutral-800 dark:text-neutral-200">
+          I'm an undergraduate at UC Berkeley studying Data Science and
+          Mathematics. I'm a software engineer and AI researcher, currently in
+          the Founders Inc Canopy cohort at Fort Mason, San Francisco, building
+          HVAC Smart Glasses. My interests span physical AI, robotics,
+          reinforcement learning, AI engineering, low-level systems, and the
+          safety and evaluation of frontier agents.
+        </p>
+        <p class="mt-3 font-sans text-sm text-neutral-700 dark:text-neutral-300">
+          <a href="mailto:steve.kuo@berkeley.edu">steve.kuo@berkeley.edu</a>
+          &nbsp;·&nbsp;
+          <a href="https://github.com/Steve-Dusty" target="_blank" rel="noopener">github</a>
+          &nbsp;·&nbsp;
+          <a href="https://linkedin.com/in/steve-kuo2" target="_blank" rel="noopener">linkedin</a>
+          &nbsp;·&nbsp;
+          <a href="https://twitter.com/stevethedust" target="_blank" rel="noopener">twitter</a>
         </p>
       </div>
-      <div class="hidden select-none pl-8 font-mono text-[11px] leading-[1.2] text-neutral-300 sm:block dark:text-neutral-700" aria-hidden="true">
-        <pre>{`    ╭─────╮
-    │ ▓▓▓ │
-    │ ▓ ▓ │
-    ╰──┬──╯
-   ╭───┴───╮
-   │  ┌─┐  │
-   │  │>│  │
-   │  └─┘  │
-   ╰───┬───╯
-      ╱ ╲
-     ╱   ╲`}</pre>
-      </div>
-    </div>
-  </section>
+    </header>
 
-  {
-    featuredProjects.length > 0 && (
-      <section class="pb-12">
-        <div class="flex items-baseline justify-between">
-          <h2 class="font-mono text-sm font-medium uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
-            Projects
-          </h2>
-          <a
-            href="/projects"
-            class="text-sm text-neutral-400 hover:text-neutral-900 dark:text-neutral-500 dark:hover:text-neutral-100"
-          >
-            View all &rarr;
-          </a>
-        </div>
-        <div class="mt-4">
-          {featuredProjects.map((project) => (
-            <a
-              href={`/projects/${project.id}`}
-              class="group block border-b border-neutral-100 py-4 dark:border-neutral-800"
-            >
-              <div class="flex items-center gap-2">
-                <h3 class="font-medium text-neutral-900 group-hover:text-slate-600 dark:text-neutral-100 dark:group-hover:text-slate-400">
-                  {project.data.title}
-                </h3>
-                {project.data.status === "wip" && (
-                  <span class="font-mono text-[10px] uppercase tracking-wide text-neutral-400 dark:text-neutral-500">
-                    WIP
+    <!-- ================== NEWS ================== -->
+    <section class="mt-14">
+      <h2 class="border-b border-neutral-300 pb-1 font-sans text-base font-semibold uppercase tracking-wider text-neutral-900 dark:border-neutral-700 dark:text-neutral-100">
+        News
+      </h2>
+      <ul class="mt-4 space-y-2.5">
+        {
+          news.map((n) => (
+            <li class="grid grid-cols-[6rem_1fr] gap-x-4 text-neutral-800 dark:text-neutral-200">
+              <span class="pt-0.5 font-sans text-sm text-neutral-500 dark:text-neutral-400">
+                {n.date}
+              </span>
+              <span set:html={n.text} />
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <!-- ================== EXPERIENCE ================== -->
+    <section class="mt-14">
+      <h2 class="border-b border-neutral-300 pb-1 font-sans text-base font-semibold uppercase tracking-wider text-neutral-900 dark:border-neutral-700 dark:text-neutral-100">
+        Experience
+      </h2>
+      {/* SHOW_PERIODS: flip to true to bring back the date column on the right */}
+      <ul class="mt-5 space-y-6">
+        {
+          experience.map((exp) => {
+            const SHOW_PERIODS = false;
+            return (
+              <li
+                class:list={[
+                  "items-baseline gap-x-4",
+                  SHOW_PERIODS && "grid grid-cols-[1fr_8rem]",
+                ]}
+              >
+                <div>
+                  <p class="text-neutral-900 dark:text-neutral-100">
+                    <span class="font-semibold">{exp.role}</span>,{" "}
+                    <a
+                      href={exp.url}
+                      target="_blank"
+                      rel="noopener"
+                      class="italic"
+                    >
+                      {exp.company}
+                    </a>
+                    .
+                  </p>
+                  <p
+                    class="mt-1 max-w-prose text-neutral-700 dark:text-neutral-300"
+                    set:html={exp.blurb}
+                  />
+                </div>
+                {SHOW_PERIODS && (
+                  <span class="text-right font-sans text-sm text-neutral-500 dark:text-neutral-400">
+                    {exp.period}
                   </span>
                 )}
-              </div>
-              <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
-                {project.data.description}
-              </p>
-              <div class="mt-2 flex flex-wrap gap-1.5">
-                {project.data.tags.map((tag: string) => (
-                  <span class="font-mono text-xs text-neutral-400 dark:text-neutral-500">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-    )
-  }
+              </li>
+            );
+          })
+        }
+      </ul>
+    </section>
 
-  {
-    recentBlog.length > 0 && (
-      <section class="pb-16">
-        <div class="flex items-baseline justify-between">
-          <h2 class="font-mono text-sm font-medium uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
-            Blog
-          </h2>
-          <a
-            href="/blog"
-            class="text-sm text-neutral-400 hover:text-neutral-900 dark:text-neutral-500 dark:hover:text-neutral-100"
-          >
-            View all &rarr;
-          </a>
-        </div>
-        <div class="mt-4">
-          {recentBlog.map((post) => (
-            <a
-              href={`/blog/${post.id}`}
-              class="group block border-b border-neutral-100 py-4 dark:border-neutral-800"
-            >
-              <div class="flex items-baseline justify-between gap-4">
-                <h3 class="font-medium text-neutral-900 group-hover:text-slate-600 dark:text-neutral-100 dark:group-hover:text-slate-400">
-                  {post.data.title}
-                </h3>
-                <span class="shrink-0 font-mono text-xs text-neutral-400 dark:text-neutral-500">
-                  {post.data.date.toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "short",
-                  })}
-                </span>
+    <!-- ================== PROJECTS ================== -->
+    <section class="mt-14">
+      <h2 class="border-b border-neutral-300 pb-1 font-sans text-base font-semibold uppercase tracking-wider text-neutral-900 dark:border-neutral-700 dark:text-neutral-100">
+        Projects
+      </h2>
+      <ol class="mt-5 space-y-5">
+        {
+          projects.map((p, i) => (
+            <li class="grid grid-cols-[1.5rem_1fr] gap-x-2">
+              <span class="pt-0.5 font-sans text-sm text-neutral-400 dark:text-neutral-600">
+                [{i + 1}]
+              </span>
+              <div>
+                <p class="text-neutral-900 dark:text-neutral-100">
+                  <span class="font-semibold">{p.title}</span>
+                  {p.status && (
+                    <span class="text-neutral-500 dark:text-neutral-400">
+                      {" "}({p.status})
+                    </span>
+                  )}
+                  . <span class="italic text-neutral-700 dark:text-neutral-300">{p.venue}</span>
+                  , {p.year}.
+                </p>
+                <p class="mt-1 max-w-prose text-neutral-700 dark:text-neutral-300">
+                  {p.blurb}
+                </p>
+                {p.links.length > 0 && (
+                  <p class="mt-1.5 font-sans text-sm">
+                    {p.links.map((l, j) => (
+                      <>
+                        {j > 0 && (
+                          <span class="text-neutral-400 dark:text-neutral-600">
+                            {" "}·{" "}
+                          </span>
+                        )}
+                        <a
+                          href={l.href}
+                          target={l.external ? "_blank" : undefined}
+                          rel={l.external ? "noopener" : undefined}
+                        >
+                          [{l.label}]
+                        </a>
+                      </>
+                    ))}
+                  </p>
+                )}
               </div>
-              <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
-                {post.data.description}
-              </p>
-            </a>
-          ))}
-        </div>
-      </section>
-    )
-  }
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <!-- ================== WRITING ================== -->
+    <section class="mt-14">
+      <h2 class="border-b border-neutral-300 pb-1 font-sans text-base font-semibold uppercase tracking-wider text-neutral-900 dark:border-neutral-700 dark:text-neutral-100">
+        Writing
+      </h2>
+      <ol class="mt-5 space-y-5">
+        {
+          writing.map((w, i) => (
+            <li class="grid grid-cols-[1.5rem_1fr] gap-x-2">
+              <span class="pt-0.5 font-sans text-sm text-neutral-400 dark:text-neutral-600">
+                [{i + 1}]
+              </span>
+              <div>
+                <p class="text-neutral-900 dark:text-neutral-100">
+                  <span class="font-semibold">{w.title}</span>.{" "}
+                  <span class="italic text-neutral-700 dark:text-neutral-300">{w.venue}</span>
+                  , {w.year}.
+                </p>
+                <p class="mt-1 max-w-prose text-neutral-700 dark:text-neutral-300">
+                  {w.blurb}
+                </p>
+                <p class="mt-1.5 font-sans text-sm">
+                  {w.links.map((l, j) => (
+                    <>
+                      {j > 0 && (
+                        <span class="text-neutral-400 dark:text-neutral-600">
+                          {" "}·{" "}
+                        </span>
+                      )}
+                      <a
+                        href={l.href}
+                        target={l.external ? "_blank" : undefined}
+                        rel={l.external ? "noopener" : undefined}
+                      >
+                        [{l.label}]
+                      </a>
+                    </>
+                  ))}
+                </p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <!-- ================== HACKATHONS ================== -->
+    <section class="mt-14">
+      <h2 class="border-b border-neutral-300 pb-1 font-sans text-base font-semibold uppercase tracking-wider text-neutral-900 dark:border-neutral-700 dark:text-neutral-100">
+        Hackathons
+      </h2>
+      <p class="mt-3 text-sm text-neutral-700 dark:text-neutral-300">
+        {hackathons.length} wins across the AWS, NVIDIA, ByteDance, YC, and
+        university circuits.
+      </p>
+      <ul class="mt-5 space-y-1.5">
+        {
+          hackathons.map((h) => (
+            <li class="text-neutral-700 dark:text-neutral-300">
+              <strong class="font-semibold text-neutral-900 dark:text-neutral-50">
+                {h.event}.
+              </strong>{" "}
+              {h.placement}.
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <!-- ================== MISC ================== -->
+    <section class="mt-14">
+      <h2 class="border-b border-neutral-300 pb-1 font-sans text-base font-semibold uppercase tracking-wider text-neutral-900 dark:border-neutral-700 dark:text-neutral-100">
+        Miscellaneous
+      </h2>
+      <p class="mt-4 max-w-prose text-neutral-800 dark:text-neutral-200">
+        Classical violin (15 years), lacrosse, and wrestling. I think the
+        discipline that compounds quietly is what makes the visible stuff
+        possible.
+      </p>
+    </section>
+  </article>
 </Base>

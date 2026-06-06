@@ -1,0 +1,25 @@
+---
+title: "HVAC Smart Glasses"
+description: "AR overlay for HVAC technicians — real-time equipment diagnostics, schematic recall, and guided repair flows."
+tags: ["AR", "wearables", "computer-vision"]
+date: 2026-04-01
+featured: true
+status: "wip"
+---
+
+A wearable AR system that turns an HVAC technician's field of view into a heads-up diagnostic tool. Built during the Founders Inc Canopy cohort.
+
+## Problem
+
+Field technicians spend a meaningful fraction of every job stack swapping between their hands, a tablet, equipment labels, and the manufacturer schematic. Information surface area is high; hands are full; lighting is bad; sites are loud.
+
+## Build
+
+- **Vision pipeline** — equipment recognition from the headset camera, OCR for plate readings (model/serial/spec)
+- **Schematic recall** — auto-pull the right wiring diagram, refrigerant chart, or service bulletin for what you're looking at
+- **Guided flows** — step-by-step repair overlays anchored to the equipment, with voice navigation so hands stay on the tools
+- **Offline-first** — sites have unreliable signal; we cache by equipment family and sync diagnostics later
+
+## Status
+
+Active build. Iterating with field technicians on the form factor, latency budget, and the right defaults for overlay density.
