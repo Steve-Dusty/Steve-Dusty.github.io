@@ -4,7 +4,7 @@ import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  site: "https://Steve-Dusty.github.io",
+  site: "https://steve-dusty.github.io",
   integrations: [mdx(), sitemap()],
   devToolbar: { enabled: false },
   vite: {
