@@ -1,0 +1,72 @@
+---
+interface Props {
+  tags: string[];
+}
+
+const { tags } = Astro.props;
+---
+
+<div class="tag-filter mb-8 flex flex-wrap gap-2">
+  <button
+    class="tag-btn active rounded-full border border-neutral-200 px-3 py-1 font-mono text-xs transition-colors dark:border-neutral-700"
+    data-tag="all"
+  >
+    all
+  </button>
+  {
+    tags.map((tag) => (
+      <button
+        class="tag-btn rounded-full border border-neutral-200 px-3 py-1 font-mono text-xs transition-colors dark:border-neutral-700"
+        data-tag={tag}
+      >
+        {tag}
+      </button>
+    ))
+  }
+</div>
+
+<style>
+  .tag-btn {
+    color: var(--color-neutral-500, #737373);
+    cursor: pointer;
+    background: transparent;
+  }
+  .tag-btn:hover,
+  .tag-btn.active {
+    color: var(--color-neutral-900, #171717);
+    border-color: var(--color-neutral-900, #171717);
+  }
+  :global(.dark) .tag-btn:hover,
+  :global(.dark) .tag-btn.active {
+    color: var(--color-neutral-100, #f5f5f5);
+    border-color: var(--color-neutral-100, #f5f5f5);
+  }
+</style>
+
+<script>
+  function initTagFilter() {
+    const buttons = document.querySelectorAll<HTMLButtonElement>(".tag-btn");
+    const items = document.querySelectorAll<HTMLElement>(".filterable-item");
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const tag = btn.dataset.tag!;
+
+        buttons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        items.forEach((item) => {
+          if (tag === "all") {
+            item.style.display = "";
+            return;
+          }
+          const itemTags = (item.dataset.tags ?? "").split(",");
+          item.style.display = itemTags.includes(tag) ? "" : "none";
+        });
+      });
+    });
+  }
+
+  initTagFilter();
+  document.addEventListener("astro:after-swap", initTagFilter);
+</script>

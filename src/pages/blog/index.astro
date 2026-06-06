@@ -1,0 +1,40 @@
+---
+import Base from "../../layouts/Base.astro";
+import PostCard from "../../components/PostCard.astro";
+import TagFilter from "../../components/TagFilter.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog", ({ data }) => !data.draft);
+const sorted = posts.sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
+---
+
+<Base title="Blog — Steve Kuo" description="Thoughts on finance, tech, and whatever else.">
+  <section class="py-8">
+    <h1 class="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+      Blog
+    </h1>
+    <p class="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
+      Thoughts on finance, tech, and whatever else.
+    </p>
+  </section>
+
+  <TagFilter tags={allTags} />
+
+  <div>
+    {
+      sorted.map((post) => (
+        <PostCard
+          title={post.data.title}
+          description={post.data.description}
+          date={post.data.date}
+          tags={post.data.tags}
+          slug={post.id}
+        />
+      ))
+    }
+  </div>
+</Base>

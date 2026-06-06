@@ -1,0 +1,49 @@
+---
+import Base from "../../layouts/Base.astro";
+import BookCard from "../../components/BookCard.astro";
+import { getCollection } from "astro:content";
+
+const items = await getCollection("library");
+
+const books = items.filter((i) => i.data.type === "book").sort((a, b) => a.data.title.localeCompare(b.data.title));
+const papers = items.filter((i) => i.data.type === "paper").sort((a, b) => a.data.title.localeCompare(b.data.title));
+const articles = items.filter((i) => i.data.type === "article").sort((a, b) => a.data.title.localeCompare(b.data.title));
+
+const sections = [
+  { label: "Books", items: books },
+  { label: "Papers", items: papers },
+  { label: "Articles", items: articles },
+].filter((s) => s.items.length > 0);
+---
+
+<Base title="Library — Steve Kuo" description="Books, papers, and articles I've found valuable.">
+  <section class="py-8">
+    <h1 class="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+      Library
+    </h1>
+    <p class="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
+      Books, papers, and articles I've found valuable.
+    </p>
+  </section>
+
+  {
+    sections.map(({ label, items }) => (
+      <section class="pb-10">
+        <h2 class="mb-2 font-mono text-xs font-medium uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+          {label}
+        </h2>
+        <div class="border-t border-neutral-100 dark:border-neutral-800">
+          {items.map((item) => (
+            <BookCard
+              title={item.data.title}
+              author={item.data.author}
+              type={item.data.type}
+              link={item.data.link}
+              notes={item.data.notes}
+            />
+          ))}
+        </div>
+      </section>
+    ))
+  }
+</Base>

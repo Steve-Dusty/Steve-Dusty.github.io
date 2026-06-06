@@ -1,0 +1,29 @@
+---
+title: "Distributed Key-Value Store"
+description: "A Raft-based distributed key-value store built in Rust with linearizable reads."
+tags: ["rust", "distributed", "systems"]
+date: 2025-08-15
+repo: "https://github.com/stevekuo/dkv"
+featured: true
+status: "active"
+---
+
+A from-scratch implementation of the Raft consensus protocol powering a distributed key-value store. Supports linearizable reads, log compaction, and dynamic membership changes.
+
+## Highlights
+
+- Full Raft implementation including leader election, log replication, and snapshotting
+- gRPC transport layer with configurable timeouts
+- Benchmarked at ~50k writes/sec on a 3-node cluster
+
+## Implementation Notes
+
+Building a consensus protocol from the paper is one of those projects that seems straightforward until you hit the edge cases. Paxos is notoriously difficult to understand — Raft was designed to be understandable, and the paper is genuinely readable — but "understandable" doesn't mean "easy to implement correctly."
+
+The hardest bug I hit was a race condition in leader election when network partitions healed. The key insight: you need to reset election timers *before* processing the AppendEntries RPC, not after.
+
+**Takeaways:**
+
+1. Property-based testing (with `proptest`) caught bugs that unit tests missed
+2. Deterministic simulation testing is worth the upfront investment
+3. The TLA+ spec is invaluable for cross-checking your implementation

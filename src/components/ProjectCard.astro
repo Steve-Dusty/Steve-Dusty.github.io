@@ -1,0 +1,46 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  tags: string[];
+  slug: string;
+  repo?: string;
+  live?: string;
+  status?: "active" | "archived" | "wip";
+}
+
+const { title, description, tags, slug, status } = Astro.props;
+
+const statusLabel: Record<string, string> = {
+  active: "Active",
+  archived: "Archived",
+  wip: "WIP",
+};
+---
+
+<a
+  href={`/projects/${slug}`}
+  class="filterable-item group block border-b border-neutral-100 py-5 dark:border-neutral-800"
+  data-tags={tags.join(",")}
+>
+  <div class="flex items-center gap-2">
+    <h3 class="font-medium text-neutral-900 group-hover:text-slate-600 dark:text-neutral-100 dark:group-hover:text-slate-400">
+      {title}
+    </h3>
+    {status && status !== "active" && (
+      <span class="font-mono text-[10px] uppercase tracking-wide text-neutral-400 dark:text-neutral-500">
+        {statusLabel[status] ?? status}
+      </span>
+    )}
+  </div>
+  <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+    {description}
+  </p>
+  <div class="mt-2 flex flex-wrap gap-1.5">
+    {tags.map((tag) => (
+      <span class="font-mono text-xs text-neutral-400 dark:text-neutral-500">
+        {tag}
+      </span>
+    ))}
+  </div>
+</a>

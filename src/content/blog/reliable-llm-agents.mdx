@@ -1,0 +1,21 @@
+---
+title: "Patterns for Reliable LLM Agents"
+description: "Practical patterns for building agents that don't fall apart in production."
+tags: ["agentic-ai", "ai/ml"]
+date: 2025-12-01
+featured: true
+---
+
+After building several agent systems, some patterns keep coming back. These aren't theoretical — they're the things that made the difference between a demo and something that actually works.
+
+## 1. Structured Output, Always
+
+Don't parse free-form text. Use function calling or constrained decoding. Every agent call should return typed data.
+
+## 2. Retry with Backoff, Not Hope
+
+LLM calls fail. Rate limits hit. Wrap every call in exponential backoff with jitter. Budget for ~5% failure rate in your latency estimates.
+
+## 3. Memory is a Database Problem
+
+Don't stuff everything into context. Use a retrieval layer. Vector search for semantic recall, structured queries for facts.

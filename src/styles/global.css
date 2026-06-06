@@ -1,0 +1,73 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", "Fira Code",
+    monospace;
+  --color-accent: #475569;
+  --color-accent-light: #64748b;
+}
+
+/*
+ * Base styles
+ */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-neutral-900 antialiased;
+  font-family: var(--font-sans);
+}
+
+.dark body {
+  @apply bg-neutral-950 text-neutral-100;
+}
+
+/*
+ * Prose overrides for MDX content
+ */
+.prose {
+  --tw-prose-body: theme(--color-neutral-800);
+  --tw-prose-headings: theme(--color-neutral-900);
+  --tw-prose-links: theme(--color-accent);
+  --tw-prose-code: theme(--color-neutral-900);
+  --tw-prose-pre-bg: theme(--color-neutral-50);
+  max-width: 65ch;
+}
+
+.dark .prose {
+  --tw-prose-body: theme(--color-neutral-300);
+  --tw-prose-headings: theme(--color-neutral-100);
+  --tw-prose-links: theme(--color-accent-light);
+  --tw-prose-code: theme(--color-neutral-100);
+  --tw-prose-pre-bg: theme(--color-neutral-900);
+}
+
+.prose a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.prose code:not(pre code) {
+  @apply rounded px-1 py-0.5 text-sm;
+  background: theme(--color-neutral-100);
+}
+
+.dark .prose code:not(pre code) {
+  background: theme(--color-neutral-800);
+}
+
+/*
+ * Selection
+ */
+::selection {
+  @apply bg-slate-200;
+}
+
+.dark ::selection {
+  @apply bg-slate-700;
+}

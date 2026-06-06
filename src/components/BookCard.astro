@@ -1,0 +1,38 @@
+---
+interface Props {
+  title: string;
+  author: string;
+  type: "book" | "paper" | "article";
+  link?: string;
+  notes?: string;
+}
+
+const { title, author, link, notes } = Astro.props;
+---
+
+<div class="py-2.5">
+  <div class="flex items-baseline gap-2">
+    {link ? (
+      <a
+        href={link}
+        class="font-medium text-neutral-900 hover:text-slate-600 dark:text-neutral-100 dark:hover:text-slate-400"
+        target="_blank"
+        rel="noopener"
+      >
+        {title}
+      </a>
+    ) : (
+      <span class="font-medium text-neutral-900 dark:text-neutral-100">
+        {title}
+      </span>
+    )}
+    <span class="text-sm text-neutral-400 dark:text-neutral-500">
+      — {author}
+    </span>
+  </div>
+  {notes && (
+    <p class="mt-0.5 text-sm text-neutral-400 dark:text-neutral-500">
+      {notes}
+    </p>
+  )}
+</div>
