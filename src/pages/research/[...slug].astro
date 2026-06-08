@@ -1,0 +1,80 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+
+export async function getStaticPaths() {
+  const items = await getCollection("research");
+  return items.map((item) => ({
+    params: { slug: item.id },
+    props: { item },
+  }));
+}
+
+const { item } = Astro.props;
+const { Content } = await render(item);
+---
+
+<Base
+  title={`${item.data.title} — Steve Kuo`}
+  description={item.data.description}
+  maxWidth="3xl"
+>
+  <article class="academic pb-20 pt-10">
+    <header class="mb-10">
+      <p
+        class="font-sans text-xs uppercase tracking-[0.22em] text-neutral-500 dark:text-neutral-400"
+      >
+        Research · {item.data.venue} · {item.data.date.getFullYear()}
+      </p>
+      <h1
+        class="mt-3 font-sans text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-50"
+      >
+        {item.data.title}
+      </h1>
+      <p class="mt-3 max-w-prose text-neutral-700 dark:text-neutral-300">
+        {item.data.description}
+      </p>
+      {
+        (item.data.pdf || item.data.arxiv || item.data.code) && (
+          <p class="mt-4 font-sans text-sm">
+            {item.data.pdf && (
+              <a href={item.data.pdf} target="_blank" rel="noopener">
+                [pdf]
+              </a>
+            )}
+            {item.data.arxiv && (
+              <>
+                {item.data.pdf && (
+                  <span class="text-neutral-400 dark:text-neutral-600">
+                    {" "}
+                    ·{" "}
+                  </span>
+                )}
+                <a href={item.data.arxiv} target="_blank" rel="noopener">
+                  [arxiv]
+                </a>
+              </>
+            )}
+            {item.data.code && (
+              <>
+                {(item.data.pdf || item.data.arxiv) && (
+                  <span class="text-neutral-400 dark:text-neutral-600">
+                    {" "}
+                    ·{" "}
+                  </span>
+                )}
+                <a href={item.data.code} target="_blank" rel="noopener">
+                  [code]
+                </a>
+              </>
+            )}
+          </p>
+        )
+      }
+    </header>
+
+    <div class="prose dark:prose-invert max-w-prose">
+      <Content />
+    </div>
+  </article>
+</Base>

@@ -1,0 +1,91 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+
+const items = await getCollection("research");
+const sorted = items.sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+---
+
+<Base
+  title="Research — Steve Kuo"
+  description="Research projects and writeups."
+  maxWidth="3xl"
+>
+  <article class="academic pb-20 pt-10">
+    <header class="mb-10">
+      <h1
+        class="font-sans text-3xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-50"
+      >
+        Research
+      </h1>
+      <p class="mt-2 text-neutral-700 dark:text-neutral-300">
+        Research projects, writeups, and ongoing work.
+      </p>
+    </header>
+
+    <ol class="space-y-7">
+      {
+        sorted.map((item, i) => (
+          <li class="grid grid-cols-[1.75rem_1fr] gap-x-2">
+            <span class="pt-1 font-sans text-sm text-neutral-400 dark:text-neutral-600">
+              [{i + 1}]
+            </span>
+            <div>
+              <p class="text-neutral-900 dark:text-neutral-100">
+                <a href={`/research/${item.id}`} class="font-semibold">
+                  {item.data.title}
+                </a>
+                .{" "}
+                <span class="italic text-neutral-700 dark:text-neutral-300">
+                  {item.data.venue}
+                </span>
+                , {item.data.date.getFullYear()}.
+              </p>
+              <p class="mt-1.5 max-w-prose text-neutral-700 dark:text-neutral-300">
+                {item.data.description}
+              </p>
+              <p class="mt-2 font-sans text-sm">
+                <a href={`/research/${item.id}`}>[page]</a>
+                {item.data.pdf && (
+                  <>
+                    <span class="text-neutral-400 dark:text-neutral-600">
+                      {" "}
+                      ·{" "}
+                    </span>
+                    <a href={item.data.pdf} target="_blank" rel="noopener">
+                      [pdf]
+                    </a>
+                  </>
+                )}
+                {item.data.arxiv && (
+                  <>
+                    <span class="text-neutral-400 dark:text-neutral-600">
+                      {" "}
+                      ·{" "}
+                    </span>
+                    <a href={item.data.arxiv} target="_blank" rel="noopener">
+                      [arxiv]
+                    </a>
+                  </>
+                )}
+                {item.data.code && (
+                  <>
+                    <span class="text-neutral-400 dark:text-neutral-600">
+                      {" "}
+                      ·{" "}
+                    </span>
+                    <a href={item.data.code} target="_blank" rel="noopener">
+                      [code]
+                    </a>
+                  </>
+                )}
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </article>
+</Base>

@@ -38,4 +38,18 @@ const library = defineCollection({
   }),
 });
 
-export const collections = { projects, blog, library };
+const research = defineCollection({
+  loader: glob({ pattern: "**/*.mdx", base: "./src/content/research" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    venue: z.string(),
+    date: z.coerce.date(),
+    type: z.enum(["paper", "preprint", "writeup", "ongoing"]).default("writeup"),
+    pdf: z.string().optional(),
+    arxiv: z.string().url().optional(),
+    code: z.string().url().optional(),
+  }),
+});
+
+export const collections = { projects, blog, library, research };
