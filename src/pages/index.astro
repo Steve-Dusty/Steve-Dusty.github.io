@@ -99,14 +99,8 @@ const projects = [
     venue: "Founders Inc Hackathon",
     year: "2026",
     blurb:
-      "Multi-agent RL environment for autonomous vehicle fleet oversight, built on Meta's OpenEnv. A 2D road grid where one LLM-controlled vehicle is monitored against scripted drivers; an observer detects crashes and near-misses each step and shapes the reward signal accordingly. 1st place overall at the Founders Inc hackathon.",
-    links: [
-      {
-        label: "github",
-        href: "https://github.com/aparekh02/overflow",
-        external: true,
-      },
-    ],
+      "Multi-agent RL environment for autonomous vehicle fleet oversight, built on Meta's OpenEnv. 1st place overall at the Founders Inc hackathon.",
+    links: [{ label: "writeup", href: "/projects/overflow" }],
   },
   {
     title: "IntentOverflow",
@@ -114,15 +108,8 @@ const projects = [
     venue: "Personal",
     year: "2026",
     blurb:
-      "A two-sided marketplace for the bugs of the AI era. Vibe-coders post broken AI-generated projects with bounties; skilled devs claim them and ship fixes live in an in-browser Cursor-style IDE with AI assist, then settle via Stripe Connect with a 10% platform cut. Push from local with `npx intentoverflow push` — a Commander.js CLI that tar-bundles the project, autodetects the stack (parses `package.json` / `requirements.txt` / `Cargo.toml`), and uploads through signed Supabase Storage URLs. The sandbox is a full Monaco editor with multi-tab editing, resizable panels, a command palette, and AI chat (OpenRouter-routed, user-provided keys) where every code block has an Apply button that rewrites the target file and surfaces the change in a Monaco diff viewer first. Fix submissions go through a typed accept/reject queue with side-by-side review before bounty escrow releases. Live with ~100 users; the focus has been on compressing claim-to-fix latency, since that's the metric demand actually feels.",
-    links: [
-      {
-        label: "github",
-        href: "https://github.com/Steve-Dusty/intentoverflow",
-        external: true,
-      },
-      { label: "project", href: "/projects/intentoverflow" },
-    ],
+      "A two-sided marketplace for AI-era bugs. Vibe-coders post broken AI-generated projects with bounties; skilled devs fix them live in an in-browser Cursor-style IDE with AI assist. Deployed with ~100 users.",
+    links: [{ label: "writeup", href: "/projects/intentoverflow" }],
   },
   {
     title: "HVAC Smart Glasses",
@@ -130,11 +117,8 @@ const projects = [
     venue: "Founders Inc Canopy",
     year: "2026",
     blurb:
-      "AR overlay for HVAC technicians. Real-time equipment recognition, schematic recall, and guided repair flows. Offline-first. Hands stay on the tools.",
-    links: [
-      { label: "project", href: "/projects/hvac-smart-glasses" },
-      { label: "founders inc", href: "https://f.inc", external: true },
-    ],
+      "AR overlay for HVAC technicians. Real-time equipment recognition, schematic recall, and guided repair flows. Offline-first; hands stay on the tools.",
+    links: [{ label: "writeup", href: "/projects/hvac-smart-glasses" }],
   },
 ];
 
