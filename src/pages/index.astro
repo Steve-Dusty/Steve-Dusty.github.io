@@ -94,6 +94,37 @@ const research = [
 // ----- Projects (bibliography format) -----
 const projects = [
   {
+    title: "Overflow",
+    status: "",
+    venue: "Founders Inc Hackathon",
+    year: "2026",
+    blurb:
+      "Multi-agent RL environment for autonomous vehicle fleet oversight, built on Meta's OpenEnv. A 2D road grid where one LLM-controlled vehicle is monitored against scripted drivers; an observer detects crashes and near-misses each step and shapes the reward signal accordingly. 1st place overall at the Founders Inc hackathon.",
+    links: [
+      {
+        label: "github",
+        href: "https://github.com/aparekh02/overflow",
+        external: true,
+      },
+    ],
+  },
+  {
+    title: "IntentOverflow",
+    status: "",
+    venue: "Personal",
+    year: "2026",
+    blurb:
+      "A two-sided marketplace for the bugs of the AI era. Vibe-coders post broken AI-generated projects with bounties; skilled devs claim them and ship fixes live in an in-browser Cursor-style IDE with AI assist, then settle via Stripe Connect with a 10% platform cut. Push from local with `npx intentoverflow push` — a Commander.js CLI that tar-bundles the project, autodetects the stack (parses `package.json` / `requirements.txt` / `Cargo.toml`), and uploads through signed Supabase Storage URLs. The sandbox is a full Monaco editor with multi-tab editing, resizable panels, a command palette, and AI chat (OpenRouter-routed, user-provided keys) where every code block has an Apply button that rewrites the target file and surfaces the change in a Monaco diff viewer first. Fix submissions go through a typed accept/reject queue with side-by-side review before bounty escrow releases. Live with ~100 users; the focus has been on compressing claim-to-fix latency, since that's the metric demand actually feels.",
+    links: [
+      {
+        label: "github",
+        href: "https://github.com/Steve-Dusty/intentoverflow",
+        external: true,
+      },
+      { label: "project", href: "/projects/intentoverflow" },
+    ],
+  },
+  {
     title: "HVAC Smart Glasses",
     status: "",
     venue: "Founders Inc Canopy",
@@ -104,39 +135,6 @@ const projects = [
       { label: "project", href: "/projects/hvac-smart-glasses" },
       { label: "founders inc", href: "https://f.inc", external: true },
     ],
-  },
-  {
-    title: "Agent Orchestrator",
-    status: "",
-    venue: "Personal",
-    year: "2025–26",
-    blurb:
-      "Lightweight framework for composing LLM agents with tool use and shared memory. DAG task graphs, pluggable executors, traceable runs.",
-    links: [
-      { label: "project", href: "/projects/agent-orchestrator" },
-      { label: "github", href: "https://github.com/stevekuo/agent-orch", external: true },
-    ],
-  },
-  {
-    title: "Distributed Key-Value Store",
-    status: "",
-    venue: "Personal",
-    year: "2025",
-    blurb:
-      "Raft-based key-value store in Rust. Linearizable reads, log compaction, dynamic membership. ~50k writes/sec on a 3-node cluster. Property-based and deterministic simulation testing.",
-    links: [
-      { label: "project", href: "/projects/distributed-kv-store" },
-      { label: "github", href: "https://github.com/stevekuo/dkv", external: true },
-    ],
-  },
-  {
-    title: "ML Trading Signals",
-    status: "",
-    venue: "Personal",
-    year: "2025",
-    blurb:
-      "Gradient-boosted intraday equity signals from market microstructure features. Backtest harness with realistic transaction costs; live paper trading on AWS Lambda.",
-    links: [{ label: "project", href: "/projects/ml-trading-signals" }],
   },
 ];
 

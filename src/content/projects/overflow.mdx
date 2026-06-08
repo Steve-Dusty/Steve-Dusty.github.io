@@ -1,0 +1,27 @@
+---
+title: "Overflow"
+description: "Multi-agent RL environment for autonomous vehicle fleet oversight, built on Meta's OpenEnv."
+tags: ["RL", "multi-agent", "autonomous-vehicles", "python", "openenv"]
+date: 2026-05-01
+repo: "https://github.com/aparekh02/overflow"
+featured: true
+status: "active"
+---
+
+An autonomous vehicle fleet oversight environment for [OpenEnv](https://github.com/meta-pytorch/OpenEnv) — Meta's open framework for RL environments.
+
+**1st place overall at the Founders Inc hackathon.**
+
+## What it is
+
+A 2D road grid with N cars. Car 0 is controlled by an LLM agent; the rest follow simple scripted driving rules. An observer detects crashes and near-misses on every step and computes rewards based on safety. The agent chooses among `accelerate`, `brake`, `lane_change_left`, `lane_change_right`, and `maintain` and has to justify its decision in natural language.
+
+## Why it matters
+
+Most RL agent benchmarks reward task completion. Fleet oversight is the inverse: the agent's job is to *not* cause incidents while staying useful. Overflow makes that the reward function — what an LLM would actually need to do if it were the supervisor of a Waymo-style fleet rather than the driver.
+
+## Stack
+
+- OpenEnv (gym-compatible server)
+- Docker, FastAPI/uvicorn server
+- Python client + LLM agent loop

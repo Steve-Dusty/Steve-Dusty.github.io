@@ -1,0 +1,38 @@
+---
+title: "IntentOverflow"
+description: "Two-sided marketplace for broken AI-generated code: post bugs with bounties, fix them live in an in-browser IDE, settle via Stripe Connect."
+tags: ["nextjs", "typescript", "supabase", "monaco", "marketplace", "openrouter"]
+date: 2026-03-01
+repo: "https://github.com/Steve-Dusty/intentoverflow"
+featured: true
+status: "active"
+---
+
+A social-media-style platform for the new kind of bug: AI-generated code that *almost* works. Posters drop a broken vibe-coded project with a bounty and a stack badge; fixers claim it, ship a fix live in an on-platform Cursor-style sandbox, and get paid out via Stripe Connect.
+
+**Live with ~100 users since launch.**
+
+## Posting flow
+
+Authors push from their terminal with `npx intentoverflow push` — a Commander.js CLI that tar-bundles the project (gitignored files stripped), autodetects the stack by parsing `package.json` / `requirements.txt` / `Cargo.toml`, and uploads through signed Supabase Storage URLs. The post lands in Postgres with the stack badges, file tree, and an attached bounty in seconds.
+
+## Fixing flow
+
+The in-browser sandbox is a full Monaco editor — multi-tab editing, file tree, resizable panels (`react-resizable-panels`), command palette, keyboard shortcuts, the works. AI chat runs over OpenRouter with user-provided keys, so platform infra stays thin and inference cost scales with usage rather than seat count. Every code block in a response gets an Apply button that rewrites the target file and surfaces the change in a Monaco diff viewer *first* — fixers see exactly what the AI is about to do before they commit.
+
+## Settlement
+
+Fix submissions enter a typed accept/reject queue. The author reviews the diff side-by-side, comments inline, and either accepts (escrow releases) or pushes back with a reason. The platform takes a **10% cut**; the rest pays out via Stripe Connect to the fixer's connected account. Bounties are held in escrow from the moment they're attached to a post, so fixers can trust that the money is real before they spend the time.
+
+## Marketplace dynamics
+
+Two-sided market with the classic chicken-and-egg. Posters won't pay if nobody fixes; fixers won't show up without paying posts. We focused early effort on fixer-side throughput — instant sandbox boot, AI Apply with diff preview, command palette navigation, persistent project state — because **claim-to-fix latency is the metric the demand side actually feels**. Posters don't care how the fix happened; they care how fast their bug went away.
+
+## Stack
+
+- **Frontend:** Next.js 14 (App Router), TypeScript, Tailwind CSS
+- **Editor:** Monaco (`@monaco-editor/react`), `react-resizable-panels`
+- **AI:** OpenRouter (user-supplied keys), Apply + Monaco diff flow
+- **Backend:** Supabase (Postgres + Auth — Google OAuth, magic links, email/password)
+- **Payments:** Stripe Connect (escrow + fixer payouts)
+- **CLI:** `intentoverflow` npm package (Commander.js)
