@@ -55,6 +55,22 @@ body {
   font-feature-settings: "kern", "liga", "ss01";
 }
 
+/* Bullet lists inside academic blurbs */
+.academic ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin-top: 0.5rem;
+}
+.academic li {
+  margin-top: 0.15rem;
+}
+.academic li::marker {
+  color: rgb(163 163 163);
+}
+.dark .academic li::marker {
+  color: rgb(82 82 82);
+}
+
 /*
  * Prose overrides for MDX content
  */

@@ -5,23 +5,23 @@ import Base from "../layouts/Base.astro";
 const news = [
   {
     date: "Jun 2026",
-    text: "Started as Research Scientist Intern at <a href='https://virtueai.com' target='_blank' rel='noopener'>Virtue AI</a>, working on evaluation for frontier LLM agents.",
+    text: "Started as <strong>Research Scientist Intern</strong> at <strong>Virtue AI</strong>, building automatic red-team agents for frontier LLMs.",
   },
   {
     date: "May 2026",
-    text: "Joined the <strong>Founders Inc Canopy</strong> cohort, building <a href='/projects/hvac-smart-glasses'>HVAC Smart Glasses</a>.",
+    text: "Started as <strong>Software Engineer Intern</strong> at <strong>Workday</strong>, working on test infrastructure automation for the payroll team.",
   },
   {
     date: "Apr 2026",
-    text: "AWS Builder Loft: 1st place overall + three sponsor tracks.",
+    text: "<strong>AWS Builder Loft</strong>: 1st place overall + three sponsor tracks.",
   },
   {
     date: "Mar 2026",
-    text: "AWS GenAI Hackathon: 1st place, Aerospike track. NVIDIA Spark: 1st, Nemotron track.",
+    text: "<strong>AWS GenAI Hackathon</strong>: 1st place, Aerospike track. <strong>NVIDIA Spark</strong>: 1st, Nemotron track.",
   },
   {
     date: "Feb 2026",
-    text: "Authored <em>AgentRearrange: A Technical Writeup</em> for <a href='https://swarms.ai' target='_blank' rel='noopener'>Swarms.ai</a>, on multi-agent task decomposition. <a href='/writeups/agent-rearrange.pdf' target='_blank' rel='noopener'>[pdf]</a>",
+    text: "Authored <em>AgentRearrange: A Technical Writeup</em> for <strong>Swarms.ai</strong>, on multi-agent task decomposition. <a href='/writeups/agent-rearrange.pdf' target='_blank' rel='noopener'>[pdf]</a>",
   },
 ];
 
@@ -33,39 +33,61 @@ const experience = [
     company: "Virtue AI",
     url: "https://virtueai.com",
     blurb:
-      "Building automatic red-team agents that break safety harnesses on frontier LLMs. Focus on the gap between what benchmarks measure and what actually fails in production.",
+      "Working on agentic red-teaming for frontier LLMs on top of <a href='https://decodingtrust-agent.com/' target='_blank' rel='noopener'>DTAP (DecodingTrust-Agent Platform)</a>. Generated 500+ adversarial datasets across 10 risk categories, achieving >50% ASR (attack success rate) against Opus 4.7, Llama, and DeepSeek.",
   },
   {
-    period: "Spring 2026",
+    period: "May 2026 – present",
     role: "Software Engineer Intern",
     company: "Workday",
     url: "https://workday.com",
     blurb:
-      "Built ML pipelines and internal automation tooling across platform services. AI engineering work on data ingestion, feature stores, and orchestrated retraining workflows.",
+      "Test infrastructure for the payroll team's CI pipeline. Built an internal Python service wrapping the payroll integration test runner with automatic retry, using stacktrace-signature matching to skip retries on genuine bugs. Cut manual re-runs on the nightly payroll suite by ~60%, saving ~10 engineer-hours/week on triage. Consolidated 4 service-specific retry configs into a single YAML schema validated in CI.",
   },
   {
-    period: "Fall 2025",
-    role: "AI Engineer Intern",
+    period: "Jan – Apr 2026",
+    role: "Software Engineer Intern",
     company: "Fetch.ai",
     url: "https://fetch.ai",
     blurb:
-      "Autonomous agent infrastructure on the Fetch network. Agent-to-agent coordination and on-chain economic primitives.",
+      "Shipped Python/FastAPI microservices on Fetch.ai's platform powering thousands of developers. Built Docker CI/CD for signup, OAuth, and microservice provisioning, cutting deploy time by 60%. Engineered Elasticsearch + semantic embedding RAG with sub-100ms p99 retrieval at platform scale. Designed multi-agent orchestration via context engineering, cutting LLM call latency by 35%.",
   },
   {
-    period: "2024 – present",
+    period: "2025 – present",
     role: "Open Source Contributor",
     company: "Swarms.ai",
     url: "https://swarms.ai",
     blurb:
-      "Contributing to the enterprise-grade multi-agent orchestration framework. <strong>6.8k+ GitHub stars</strong>, ~950 forks, production deployments at multiple enterprises. Authored the AgentRearrange technical writeup on multi-agent task decomposition.",
+      "Open source contributor on the enterprise multi-agent framework (5.2k+ GitHub stars; Python, FastMCP, Rust, TypeScript). Shipped 200+ merged PRs across orchestration, API, and platform. Implemented research-paper architectures (Mixture of Agents, Reflexion, Self-Consistency) into core. Built core orchestration components powering production agents in finance, healthcare, and legal. Wrote the infrastructure for an agent marketplace hosting 10K+ deployed agents handling $100K+ in transactions.",
   },
   {
-    period: "Summer 2024",
+    period: "Jun – Aug 2025",
     role: "Software Engineer Intern",
     company: "Northrop Grumman",
     url: "https://northropgrumman.com",
     blurb:
-      "Mission-critical <strong>C and C++</strong> for aerospace and defense systems. Real-time embedded work where every dependency goes through a security review.",
+      "Wrote Bash scripts to verify software integrations for airborne communications, cutting test time by 50%. Built C++ modules for real-time signal handling and telemetry used in flight systems. Automated verification with Ansible to interface with firmware, improving repeatability and traceability.",
+  },
+];
+
+// ----- Research (bibliography format) -----
+const research = [
+  {
+    title: "Agentic Red-Teaming on DTAP (DecodingTrust-Agent Platform)",
+    venue: "Virtue AI",
+    year: "2026",
+    blurb:
+      "Extending the DTAP benchmark with new sandboxes (Gmail, Salesforce, Slack-MCP, GitHub-MCP) and building adversarial prompt pipelines that stress-test frontier coding agents (Claude Code, OpenClaw).",
+    links: [],
+  },
+  {
+    title: "AgentRearrange: A Technical Writeup",
+    venue: "Swarms.ai",
+    year: "2024",
+    blurb:
+      "Multi-agent task decomposition and reordering across agent graphs. Patterns from working on the orchestration framework.",
+    links: [
+      { label: "pdf", href: "/writeups/agent-rearrange.pdf", external: true },
+    ],
   },
 ];
 
@@ -120,16 +142,6 @@ const projects = [
 
 // ----- Writing (bibliography format) -----
 const writing = [
-  {
-    title: "AgentRearrange: A Technical Writeup",
-    venue: "Swarms.ai",
-    year: "2024",
-    blurb:
-      "Multi-agent task decomposition and reordering across agent graphs. Patterns from working on the orchestration framework.",
-    links: [
-      { label: "pdf", href: "/writeups/agent-rearrange.pdf", external: true },
-    ],
-  },
   {
     title: "Patterns for Reliable LLM Agents",
     venue: "Personal blog",
@@ -333,13 +345,13 @@ const hackathons = [
                       href={exp.url}
                       target="_blank"
                       rel="noopener"
-                      class="italic"
+                      class="font-semibold"
                     >
                       {exp.company}
                     </a>
                     .
                   </p>
-                  <p
+                  <div
                     class="mt-1 max-w-prose text-neutral-700 dark:text-neutral-300"
                     set:html={exp.blurb}
                   />
@@ -354,6 +366,56 @@ const hackathons = [
           })
         }
       </ul>
+    </section>
+
+    <!-- ================== RESEARCH ================== -->
+    <section class="mt-14">
+      <h2 class="border-b border-neutral-300 pb-1 font-sans text-base font-semibold uppercase tracking-wider text-neutral-900 dark:border-neutral-700 dark:text-neutral-100">
+        Research
+      </h2>
+      <ol class="mt-5 space-y-5">
+        {
+          research.map((r, i) => (
+            <li class="grid grid-cols-[1.5rem_1fr] gap-x-2">
+              <span class="pt-0.5 font-sans text-sm text-neutral-400 dark:text-neutral-600">
+                [{i + 1}]
+              </span>
+              <div>
+                <p class="text-neutral-900 dark:text-neutral-100">
+                  <span class="font-semibold">{r.title}</span>.{" "}
+                  <span class="italic text-neutral-700 dark:text-neutral-300">
+                    {r.venue}
+                  </span>
+                  , {r.year}.
+                </p>
+                <p class="mt-1 max-w-prose text-neutral-700 dark:text-neutral-300">
+                  {r.blurb}
+                </p>
+                {r.links.length > 0 && (
+                  <p class="mt-1.5 font-sans text-sm">
+                    {r.links.map((l, j) => (
+                      <>
+                        {j > 0 && (
+                          <span class="text-neutral-400 dark:text-neutral-600">
+                            {" "}·{" "}
+                          </span>
+                        )}
+                        <a
+                          href={l.href}
+                          target={l.external ? "_blank" : undefined}
+                          rel={l.external ? "noopener" : undefined}
+                        >
+                          [{l.label}]
+                        </a>
+                      </>
+                    ))}
+                  </p>
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
     </section>
 
     <!-- ================== PROJECTS ================== -->
@@ -376,7 +438,6 @@ const hackathons = [
                       {" "}({p.status})
                     </span>
                   )}
-                  . <span class="italic text-neutral-700 dark:text-neutral-300">{p.venue}</span>
                   , {p.year}.
                 </p>
                 <p class="mt-1 max-w-prose text-neutral-700 dark:text-neutral-300">
